@@ -1,5 +1,4 @@
 import React from 'react';
-import MqttComponent from "../Components/MqttComponent";
 
 const About = () => {
     return (
