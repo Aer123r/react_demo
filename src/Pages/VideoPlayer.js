@@ -1,41 +1,29 @@
-// import React, { useEffect, useRef } from 'react';
-// import videojs from 'video.js';
-// import 'videojs-contrib-hls';
-
-// const VideoPlayer = () => {
-//   const videoRef = useRef(null);
-//   let player;
-
-//   useEffect(() => {
-//     // 创建视频播放器
-//     player = videojs(videoRef.current, {
-//       techOrder: ['html5'],
-//       html5: {
-//         hls: {
-//           enableLowInitialPlaylist: true,
-//           smoothQualityChange: true,
-//           overrideNative: true
-//         }
-//       }
-//     });
-
-//     // 加载HLS直播流
-//     player.src({
-//       src: 'https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8',
-//       type: 'application/x-mpegURL'
-//     });
-
-//     return () => {
-//       // 在组件卸载时销毁视频播放器
-//       if (player) {
-//         player.dispose();
-//       }
-//     };
-//   }, []);
-
-//   return (
-//     <div>
-//       <video ref={videoRef} className="video-js vjs-default-skin"></video>
-//     </div>
-//   );
-// };
+import React, { useEffect } from 'react'
+import flvjs from 'flv.js'
+export default function VideoPlayer() {
+  useEffect(()=>{
+    if (flvjs.isSupported()) {
+      var videoElement = document.getElementById('videoElement');
+      var flvPlayer = flvjs.createPlayer({
+          type: 'flv',
+          url: 'http://192.168.8.209:8080/live/livestream.flv'
+      });
+      flvPlayer.attachMediaElement(videoElement);
+      flvPlayer.load();
+      
+      setTimeout(()=>{
+        flvPlayer.play();
+      },1000)
+     
+  }
+  return ()=>{
+    flvPlayer.unload();
+    flvPlayer.detachMediaElement();
+  }
+  },[])
+  return (
+    <div>
+      <video id="videoElement" controls={true}></video>
+    </div>
+  )
+}

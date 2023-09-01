@@ -6,7 +6,8 @@ import React, { useState } from "react";
 import { Button, Menu } from "antd";
 import { MenuOutlined } from '@ant-design/icons'
 
-import Esp32Cam from './Pages/Esp32Cam';
+import ControllerPage from './Pages/ControllerPage';
+import VideoPlayer from './Pages/VideoPlayer'
 function App() {
   const navigate = useNavigate()
   const [visible, setVisible] = useState(false);
@@ -52,7 +53,13 @@ function App() {
             无人机列表
           </Menu.Item>
           <Menu.Item key="3" onClick={() => {
-            navigate('/espvideo')
+            navigate('/controllerPage')
+            handleClick()
+          }}>
+            控制平台
+          </Menu.Item>
+          <Menu.Item key="4" onClick={() => {
+            navigate('/videoplayer')
             handleClick()
           }}>
             Monitor
@@ -65,7 +72,8 @@ function App() {
         <Routes>
           <Route path={'/'} element={<DroneMap />}></Route>
           <Route path={'/about'} element={<About />}></Route>
-          <Route path={'/espvideo'} element={<Esp32Cam />}></Route>
+          <Route path={'/controllerPage'} element={<ControllerPage />}></Route>
+          <Route path={'/videoplayer'} element={<VideoPlayer />}></Route>
         </Routes>
       </div>
     </div>
