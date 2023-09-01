@@ -1,41 +1,45 @@
-// import React, { useEffect, useRef } from 'react';
-// import videojs from 'video.js';
-// import 'videojs-contrib-hls';
+import React, { useEffect, useRef } from 'react';
+import videojs from 'video.js';
+import 'video.js/dist/video-js.css';
+import 'videojs-contrib-hls';
 
-// const VideoPlayer = () => {
-//   const videoRef = useRef(null);
-//   let player;
+const HLSPlayer = () => {
+  const videoRef = useRef(null);
 
-//   useEffect(() => {
-//     // 创建视频播放器
-//     player = videojs(videoRef.current, {
-//       techOrder: ['html5'],
-//       html5: {
-//         hls: {
-//           enableLowInitialPlaylist: true,
-//           smoothQualityChange: true,
-//           overrideNative: true
-//         }
-//       }
-//     });
+  useEffect(() => {
+    let player;
 
-//     // 加载HLS直播流
-//     player.src({
-//       src: 'https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8',
-//       type: 'application/x-mpegURL'
-//     });
+    // Check if the video element exists before initializing
+    if (videoRef.current) {
+      // Initialize the video.js player
+      player = videojs(videoRef.current, {
+        // Specify the options here, if needed
+        // For example:
+        // autoplay: true,
+        // controls: true,
+        // fluid: true,
+      });
 
-//     return () => {
-//       // 在组件卸载时销毁视频播放器
-//       if (player) {
-//         player.dispose();
-//       }
-//     };
-//   }, []);
+      // Load the HLS video source
+      player.src({
+        src: 'your_hls_video_url_here.m3u8',
+        type: 'application/x-mpegURL', // HLS MIME type
+      });
+    }
 
-//   return (
-//     <div>
-//       <video ref={videoRef} className="video-js vjs-default-skin"></video>
-//     </div>
-//   );
-// };
+    // Clean up the player when the component unmounts
+    return () => {
+      if (player) {
+        player.dispose();
+      }
+    };
+  }, []);
+
+  return (
+    <div data-vjs-player>
+      <video ref={videoRef} className="video-js vjs-default-skin" />
+    </div>
+  );
+};
+
+export default HLSPlayer;

@@ -1,11 +1,11 @@
 import React from 'react';
-import MqttComponent from "../Components/MqttComponent";
 
 const About = () => {
     return (
         <div>
-            {/* <div style={{position:'fixed',top:'20px'}}>aaa</div> */}
-            <MqttComponent/>
+            <h1>无人机列表</h1>
+            <button>控制</button>
+            <input></input>      
         </div>
     );
 };
